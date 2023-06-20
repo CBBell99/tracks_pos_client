@@ -3,10 +3,15 @@
 import { useState } from 'react';
 import axios from 'axios';
 import PinPadButton from './PinPadButton';
+import { logIn, logOut } from '../context/features/authSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../context/store';
 
 function Login() {
   const [enteredPin, setEnteredPin] = useState('');
   const [employee, setEmployee] = useState<Employee | null>(null);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   type Employee = {
     firstName: string;
@@ -30,13 +35,16 @@ function Login() {
       const data = response.data;
       setEmployee(data.employee);
       setEnteredPin('');
+      dispatch(logIn(data.employee));
     } catch (error) {
       console.error('Error logging in:', error);
+      
     }
   };
 
   const handleLogout = () => {
     setEmployee(null);
+    dispatch(logOut());
   };
 
   return (
@@ -57,9 +65,9 @@ function Login() {
         <PinPadButton onClick={() => handlePinChange('7')}>7</PinPadButton>
         <PinPadButton onClick={() => handlePinChange('8')}>8</PinPadButton>
         <PinPadButton onClick={() => handlePinChange('9')}>9</PinPadButton>
-        <PinPadButton onClick={handleLogin}>Login</PinPadButton>
-        <PinPadButton onClick={() => handlePinChange('9')}>0</PinPadButton>
         <PinPadButton onClick={handleLogout}>Logout</PinPadButton>
+        <PinPadButton onClick={() => handlePinChange('9')}>0</PinPadButton>
+        <PinPadButton onClick={handleLogin}>Login</PinPadButton>
       </div>
       {employee && `Welcome ${employee.firstName}`}
     </div>
