@@ -79,7 +79,7 @@ function Login() {
         <PinPadButton onClick={() => handlePinChange('9')}>0</PinPadButton>
         <PinPadButton onClick={handleLogin}>Login</PinPadButton>
       </div>
-      {employee && `Welcome ${employee.firstName}`}
+      {employee && <p>Welcome {employee.firstName}</p>}
       {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
     </div>
   );
