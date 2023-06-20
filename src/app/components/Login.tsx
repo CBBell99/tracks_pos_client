@@ -10,6 +10,7 @@ import { AppDispatch } from '../context/store';
 function Login() {
   const [enteredPin, setEnteredPin] = useState('');
   const [employee, setEmployee] = useState<Employee | null>(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -22,6 +23,7 @@ function Login() {
   };
 
   const handleLogin = async () => {
+    setEnteredPin('');
     try {
       const response = await axios.post(
         'http://localhost:5005/api/employees/login',
@@ -33,12 +35,20 @@ function Login() {
         },
       );
       const data = response.data;
+      if (enteredPin !== data.pin) {
+        throw new Error('Invalid PIN entered');
+      }
       setEmployee(data.employee);
-      setEnteredPin('');
-      dispatch(logIn(data.employee));
-    } catch (error) {
+      dispatch(logIn(data.employee.pin));
+      } catch (error: any) {
+    if (error.response && error.response.status === 404) {
+      setErrorMessage('Invalid PIN entered');
+    } else if (error.response && error.response.status === 404) {
+      setErrorMessage('Employee not found');
+    } else {
+      setErrorMessage('Error logging in');
       console.error('Error logging in:', error);
-      
+      }
     }
   };
 
@@ -70,6 +80,7 @@ function Login() {
         <PinPadButton onClick={handleLogin}>Login</PinPadButton>
       </div>
       {employee && `Welcome ${employee.firstName}`}
+      {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
     </div>
   );
 }
