@@ -35,11 +35,13 @@ function Login() {
         },
       );
       const data = response.data;
-      if (enteredPin !== data.pin) {
+      const employee = data.employee;
+      
+      if (enteredPin !== employee.pin) {
         throw new Error('Invalid PIN entered');
       }
-      setEmployee(data.employee);
-      dispatch(logIn(data.employee.pin));
+      setEmployee(employee);
+      dispatch(logIn(employee.pin));
       } catch (error: any) {
     if (error.response && error.response.status === 404) {
       setErrorMessage('Invalid PIN entered');
