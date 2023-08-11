@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import PinPadButton from './PinPadButton';
-import { logIn, logOut } from '../context/features/authSlice';
+import PinPadButton from './components/PinPadButton';
+import { logIn, logOut } from './context/features/authSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../context/store';
-import { useRouter } from 'next/navigation';
+import { AppDispatch } from './context/store';
+import { useRouter } from 'next/router';
 
 function Login() {
   const [enteredPin, setEnteredPin] = useState('');
@@ -21,11 +21,13 @@ function Login() {
   };
 
   const handlePinChange = (digit: string) => {
+    !errorMessage;
     setEnteredPin(prevPin => prevPin + digit);
   };
 
   const handleLogin = async () => {
     setEnteredPin('');
+    console.log('handleLogin called');
     try {
       const response = await axios.post(
         'http://localhost:5005/api/employees/login',
@@ -44,19 +46,18 @@ function Login() {
       }
       setEmployee(employee);
       dispatch(logIn(employee.pin));
+
       router.push('/floormap');
+      console.log('Navigation executed');
     } catch (error: any) {
       if (error.response && error.response.status === 404) {
         setErrorMessage('Invalid PIN entered');
-      } else if (error.response && error.response.status === 404) {
+      } else if (error.response && error.response.status === 500) {
         setErrorMessage('Employee not found');
       } else {
         setErrorMessage('Error logging in');
         console.error('Error logging in:', error);
       }
-          setTimeout(() => {
-            setErrorMessage('');
-          }, 5000);
     }
   };
 
