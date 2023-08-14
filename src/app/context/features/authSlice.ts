@@ -27,20 +27,23 @@ export const auth = createSlice({
   initialState,
   reducers: {
     logOut: () => {
-      return initialState
+      return initialState;
     },
-    logIn:(_, action: PayloadAction<string>)=>{
+    logIn: (state, action: PayloadAction<Employee>) => {
       return {
+        ...state,
         value: {
+          ...state.value,
           isAuth: true,
-          firstName: action.payload,
-          lastName: action.payload,
-          role: action.payload,
-          id: action.payload
-      }}
-    }
-  }
-})
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          role: action.payload.role,
+          id: action.payload.id,
+        },
+      };
+    },
+  },
+});
 
 export const { logOut, logIn } = auth.actions
 export default auth.reducer

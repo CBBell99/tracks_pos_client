@@ -43,7 +43,7 @@ function Login() {
         throw new Error('Invalid PIN entered');
       }
       setEmployee(employee);
-      dispatch(logIn(employee.pin));
+      dispatch(logIn(employee));
       router.push('/floormap');
     } catch (error: any) {
       if (error.response && error.response.status === 404) {

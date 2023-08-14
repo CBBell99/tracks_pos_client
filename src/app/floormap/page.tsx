@@ -1,8 +1,12 @@
-
+"use client";
+import { useAppSelector } from '../context/store';
+import { RootState } from '../context/store';
+import { log } from 'console';
 function FloorMap() {
-  return (
-    <div>floor</div>
-  )
+  const user = useAppSelector((state) => state.authReducer.value);
+  console.log(user);
+
+  return <div>floor</div>;
 }
 
-export default FloorMap
+export default FloorMap;
