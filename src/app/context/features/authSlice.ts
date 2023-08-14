@@ -1,15 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type InitialState = {
-  value: AuthState;
+  value: Employee;
 }
 
-type AuthState = {
+
+
+type Employee = {
   isAuth: boolean;
   firstName: string;
   lastName: string;
   role: string;
   id: string;
+  pin: string;
+  email: string;
+  password: string;
 }
 
 const initialState = {
@@ -18,8 +23,11 @@ const initialState = {
     firstName: '',
     lastName: '',
     role: '',
-    id:''
-  } as AuthState
+    id: '',
+    pin: '',
+    email: '',
+    password: ''
+  } as Employee
 } as InitialState
 
 export const auth = createSlice({
@@ -39,6 +47,10 @@ export const auth = createSlice({
           lastName: action.payload.lastName,
           role: action.payload.role,
           id: action.payload.id,
+          pin: action.payload.pin,
+          email: action.payload.email,
+          password: action.payload.password
+
         },
       };
     },
