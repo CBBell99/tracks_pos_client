@@ -4,8 +4,6 @@ type InitialState = {
   value: Employee;
 }
 
-
-
 type Employee = {
   isAuth: boolean;
   firstName: string;
