@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type InitialState = {
-  value: Employee;
+  user: Employee;
 }
 
 type Employee = {
@@ -16,7 +16,7 @@ type Employee = {
 }
 
 const initialState = {
-  value: {
+  user: {
     isAuth: false,
     firstName: '',
     lastName: '',
@@ -38,8 +38,8 @@ export const auth = createSlice({
     logIn: (state, action: PayloadAction<Employee>) => {
       return {
         ...state,
-        value: {
-          ...state.value,
+        user: {
+          ...state.user,
           isAuth: true,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
