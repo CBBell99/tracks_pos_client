@@ -6,25 +6,25 @@ type InitialState = {
 
 type Employee = {
   isAuth: boolean;
-  firstName: string;
-  lastName: string;
-  role: string;
-  id: string;
-  pin: string;
-  email: string;
-  password: string;
-}
+  firstName: string | null;
+  lastName: string | null;
+  role: string | null;
+  id: string | null;
+  pin: string | null;
+  email: string | null;
+  password: string | null;
+};
 
 const initialState = {
   user: {
     isAuth: false,
-    firstName: '',
-    lastName: '',
-    role: '',
-    id: '',
-    pin: '',
-    email: '',
-    password: ''
+    firstName: null,
+    lastName: null,
+    role: null,
+    id: null,
+    pin: null ,
+    email: null,
+    password: null
   } as Employee
 } as InitialState
 
